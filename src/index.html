@@ -49,6 +49,7 @@
     this.load.image('ground', 'assets/platform.png');
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
+    this.load.image('tryagain', 'assets/try again.png');
     this.load.spritesheet('dude', 
         'assets/dude.png',
         { frameWidth: 32, frameHeight: 48 }
@@ -107,6 +108,9 @@
         });
 
 scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+gameOverText = this.add.image(400,300, 'tryagain');
+gameOverText.setOrigin(0.5)
+gameOverText.visible = false
 
 bombs = this.physics.add.group();
 
@@ -124,8 +128,14 @@ this.physics.add.collider(player, bombs, hitBomb, null, this);
     {
         if (gameOver)
     {
-        return;
-    }
+       gameOverText.visible = true
+
+this.input.once('pointerdown', () => {
+this.scene.restart();
+gameOverText.visible = false
+gameOver = false
+    })
+}
 
         if (cursors.left.isDown)
         {
