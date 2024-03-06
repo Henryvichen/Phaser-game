@@ -38,6 +38,8 @@ class MainGame extends Phaser.Scene {
             'assets/dude.png',
             { frameWidth: 32, frameHeight: 48 }
         );
+        this.load.audio('collectSound', 'assets/orb.mp3')
+        this.load.audio('loseSound', 'assets/snakedeath.mp3')
     }
 
     create() {
@@ -132,6 +134,7 @@ class MainGame extends Phaser.Scene {
 
     collectStar(player, star) {
         star.disableBody(true, true);
+        this.sound.play('collectSound')
         this.score += 10;
         this.scoreText.setText('Score: ' + this.score);
 
@@ -155,6 +158,7 @@ class MainGame extends Phaser.Scene {
         player.setTint(0xff0000);
         player.anims.play('turn');
         this.gameOver = true;
+        this.sound.play('loseSound')
     }
 }
 
